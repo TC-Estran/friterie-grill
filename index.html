@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Friterie Grill – Sargé-sur-Braye</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --jaune: #FFD43B;
+      --jaune-fonce: #F59F00;
+      --rouge: #D63031;
+      --dark: #1C1917;
+      --texte: #2D2926;
+      --fond-clair: #FFFBF0;
+      --fond-alt: #FFF8E1;
+      --bordure: #EDE9D8;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--fond-clair); color: var(--texte); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      gap: 2.5rem; padding: 0 1.5rem; height: 60px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .nav-logo { font-size: 1rem; font-weight: 900; color: var(--jaune); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: #D4C9A8; text-decoration: none; font-size: 0.85rem; font-weight: 700; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--jaune); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      padding-top: 60px; overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(to top, rgba(10,8,6,0.92) 0%, rgba(10,8,6,0.55) 45%, rgba(10,8,6,0.08) 100%),
+        linear-gradient(to right, rgba(10,8,6,0.55) 0%, rgba(10,8,6,0) 60%);
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 660px;
+      padding: 3rem 5vw 4.5rem;
+      margin: 0 auto; text-align: center;
+    }
+    .hero-badge {
+      display: inline-block; background: var(--jaune); color: var(--dark);
+      font-size: 0.68rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 30px; margin-bottom: 1.3rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      font-weight: 900; color: #fff; line-height: 1.05; margin-bottom: 1rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .hero h1 em { color: var(--jaune); font-style: normal; }
+    .hero-desc { font-size: 1rem; color: rgba(255,255,255,0.72); line-height: 1.75; margin-bottom: 2rem; max-width: 460px; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.8rem; border-radius: 50px;
+      font-weight: 900; font-size: 0.92rem; font-family: 'Nunito', sans-serif;
+      text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+    .btn-primary { background: var(--jaune); color: var(--dark); }
+    .btn-outline { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; text-align: center; }
+    .container { max-width: 820px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; background: var(--jaune); color: var(--dark);
+      font-size: 0.68rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.28rem 0.9rem; border-radius: 30px; margin-bottom: 0.6rem;
+    }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 900; color: var(--texte); margin-bottom: 0.5rem; }
+    .section-sub { color: #8B7D6B; font-size: 0.92rem; margin-bottom: 2.2rem; }
+
+    /* ── COMMANDER ── */
+    #commander { background: var(--jaune); }
+    #commander .section-label { background: var(--dark); color: var(--jaune); }
+    #commander .section-title { color: var(--dark); }
+    #commander .section-sub { color: #5A4A2A; }
+    .commander-box {
+      background: #fff; border-radius: 20px; padding: 2.2rem 1.8rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      display: inline-flex; flex-direction: column; align-items: center; gap: 1.3rem;
+      max-width: 520px; width: 100%;
+    }
+    .commander-box p { color: #5A4A2A; line-height: 1.8; font-size: 0.95rem; font-weight: 600; }
+    .commander-box p strong { color: var(--dark); font-weight: 900; }
+    .horaires-rapides { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .creneau { background: var(--fond-alt); border: 2px solid var(--jaune-fonce); border-radius: 12px; padding: 0.75rem 1.1rem; text-align: center; }
+    .creneau .label { font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #8B7D6B; }
+    .creneau .heure { font-size: 0.97rem; font-weight: 900; color: var(--dark); }
+    .phone-big {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--dark); color: var(--jaune);
+      text-decoration: none; padding: 0.9rem 2rem;
+      border-radius: 50px; font-weight: 900; font-size: 1.15rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .phone-big:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .tip { font-size: 0.76rem; color: #8B7D6B; font-weight: 600; max-width: 340px; line-height: 1.5; }
+
+    /* ── CARTE ── */
+    #carte { background: var(--fond-clair); }
+    .menu-tabs { display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; margin-bottom: 1.8rem; }
+    .tab-btn {
+      background: #fff; border: 2px solid var(--bordure); color: #8B7D6B;
+      padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s; font-weight: 800; font-family: 'Nunito', sans-serif;
+    }
+    .tab-btn:hover { border-color: var(--jaune-fonce); color: var(--texte); }
+    .tab-btn.active { background: var(--jaune); border-color: var(--jaune); color: var(--dark); }
+    .menu-panel { display: none; }
+    .menu-panel.active { display: flex; justify-content: center; }
+    /* Carte complète : plus large */
+    .menu-panel img {
+      width: 100%; max-width: 480px;
+      border-radius: 14px; border: 2px solid var(--bordure);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      cursor: zoom-in; transition: transform 0.2s;
+    }
+    .menu-panel img:hover { transform: scale(1.01); }
+    #panel-tout img { max-width: 820px; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 95vw; max-height: 92vh;
+      object-fit: contain; border-radius: 8px;
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: var(--jaune); color: var(--dark);
+      border: none; border-radius: 50%; width: 40px; height: 40px;
+      font-size: 1.2rem; font-weight: 900; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── HORAIRES ── */
+    #horaires { background: var(--fond-alt); }
+    .horaires-list { display: flex; flex-direction: column; gap: 0.45rem; max-width: 460px; margin: 0 auto; }
+    .horaire-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.85rem 1.3rem; border-radius: 12px;
+      background: #fff; border: 2px solid var(--bordure); transition: border-color 0.2s;
+    }
+    .horaire-row.today { border-color: var(--jaune-fonce); background: #FFFDE7; }
+    .horaire-row.ferme { opacity: 0.4; }
+    .horaire-jour { font-weight: 800; font-size: 0.92rem; display: flex; align-items: center; gap: 0.5rem; }
+    .today-tag { font-size: 0.6rem; background: var(--jaune); color: var(--dark); font-weight: 900; padding: 0.12rem 0.5rem; border-radius: 10px; }
+    .horaire-heure { font-size: 0.82rem; color: #8B7D6B; text-align: right; line-height: 1.6; font-weight: 700; }
+    .today .horaire-heure { color: #5A4A2A; }
+    .note-horaires {
+      margin: 1.3rem auto 0; max-width: 460px;
+      background: #FFF9C4; border: 2px solid var(--jaune-fonce);
+      border-radius: 12px; padding: 0.9rem 1.2rem;
+      color: #5A4A2A; font-size: 0.86rem; line-height: 1.7; font-weight: 700;
+    }
+    .note-horaires a { color: var(--rouge); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--jaune); padding: 3.2rem 1.5rem; }
+    .contact-strip {
+      max-width: 820px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; flex-wrap: wrap; text-align: center;
+    }
+    .contact-strip-left h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 900; color: var(--dark); margin-bottom: 0.25rem; }
+    .contact-strip-left p { color: #5A4A2A; font-weight: 700; font-size: 0.88rem; }
+    .contact-strip-items { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+    .contact-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--dark); color: var(--jaune);
+      text-decoration: none; padding: 0.7rem 1.3rem;
+      border-radius: 50px; font-weight: 900; font-size: 0.88rem;
+      transition: transform 0.15s, box-shadow 0.15s; white-space: nowrap;
+    }
+    .contact-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .contact-pill.light { background: rgba(0,0,0,0.1); color: var(--dark); border: 2px solid rgba(0,0,0,0.12); }
+    .contact-pill.light:hover { background: rgba(0,0,0,0.17); }
+
+    /* ── ALLERGÈNES ── */
+    #allergenes { background: var(--fond-alt); }
+    .allergen-tabs {
+      display: flex; flex-wrap: wrap; gap: 0.45rem;
+      justify-content: center; margin-bottom: 1.8rem;
+    }
+    .allergen-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #fff; border: 2px solid var(--bordure); color: #8B7D6B;
+      padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s; font-weight: 800;
+      font-family: 'Nunito', sans-serif;
+    }
+    .allergen-btn:hover { border-color: var(--jaune-fonce); color: var(--texte); }
+    .allergen-btn.active { background: var(--jaune); border-color: var(--jaune); color: var(--dark); }
+    .allergen-btn .abadge {
+      background: rgba(0,0,0,0.1); color: inherit;
+      font-size: 0.65rem; font-weight: 900;
+      padding: 0.1rem 0.45rem; border-radius: 8px;
+    }
+    .allergen-btn.active .abadge { background: rgba(0,0,0,0.15); }
+    .allergen-btn .abadge.zero { background: #C8E6C9; color: #2E7D32; }
+
+    .allergen-panel { display: none; }
+    .allergen-panel.active { display: block; }
+    .allergen-panel-inner {
+      background: #fff; border: 2px solid var(--bordure);
+      border-radius: 16px; padding: 1.8rem 2rem;
+      max-width: 680px; margin: 0 auto; text-align: left;
+    }
+    .allergen-panel-title {
+      font-size: 1.2rem; font-weight: 900; color: var(--dark);
+      margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .allergen-dishes { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .allergen-dish {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.55rem 0; border-bottom: 1px solid var(--bordure);
+      gap: 1rem;
+    }
+    .allergen-dish:last-child { border-bottom: none; }
+    .dish-name { font-weight: 900; font-size: 0.9rem; color: var(--dark); }
+    .dish-detail { font-size: 0.8rem; color: #8B7D6B; font-weight: 600; text-align: right; flex-shrink: 0; }
+    .allergen-sauces {
+      margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed var(--bordure);
+    }
+    .allergen-sauces-title { font-size: 0.72rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #8B7D6B; margin-bottom: 0.5rem; }
+    .allergen-sauces p { font-size: 0.82rem; color: var(--texte); font-weight: 600; line-height: 1.6; }
+    .allergen-none {
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 1rem; font-weight: 700; color: #2E7D32;
+    }
+    .allergen-note {
+      margin: 1.5rem auto 0; max-width: 680px;
+      background: #FFF9C4; border: 2px solid var(--jaune-fonce);
+      border-radius: 12px; padding: 0.9rem 1.2rem;
+      color: #5A4A2A; font-size: 0.84rem; line-height: 1.7; font-weight: 700;
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: #111; border-top: 3px solid var(--jaune); text-align: left; padding: 1.6rem 2rem; color: #57534E; font-size: 0.78rem; font-weight: 700; }
+    footer strong { color: var(--jaune); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { gap: 1.2rem; }
+      .nav-links { gap: 0.9rem; }
+      .nav-links a { font-size: 0.76rem; }
+      .hero-content { padding: 2.5rem 1.5rem 3.5rem; }
+      .hero-cta { justify-content: flex-start; }
+      .horaires-rapides { flex-direction: column; align-items: center; }
+      .contact-strip { flex-direction: column; text-align: center; }
+      .contact-strip-items { justify-content: center; }
+      .tab-btn { font-size: 0.76rem; padding: 0.45rem 0.85rem; }
+    }
+    @media (max-width: 420px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><img src="images/logo.webp" alt="La Friterie Grill" style="height:40px;width:40px;object-fit:cover;border-radius:50%;vertical-align:middle;margin-right:0.5rem;"> La Friterie Grill</a>
+  <ul class="nav-links">
+    <li><a href="#commander">Commander</a></li>
+    <li><a href="#carte">La carte</a></li>
+    <li><a href="#horaires">Horaires</a></li>
+    <li><a href="#allergenes">Allergènes</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="images/hero.jpg" alt="La Friterie Grill – terrasse">
+  </div>
+  <div class="hero-content">
+    <img src="images/logo.webp" alt="Logo La Friterie Grill" style="display:block;width:130px;height:130px;object-fit:cover;border-radius:50%;box-shadow:0 4px 28px rgba(0,0,0,0.45);margin:0 auto 1.2rem;">
+<div class="hero-badge">Sargé-sur-Braye · Loir-et-Cher (41)</div>
+    <h1>La <em>Friterie</em><br>Grill</h1>
+    <p class="hero-desc">Frites maison, burgers gourmands, hot-dogs, salades… Une cuisine généreuse et conviviale !</p>
+    <div class="hero-cta">
+      <a href="tel:0670427519" class="btn btn-primary">📞 Commander par tél.</a>
+      <a href="#carte" class="btn btn-outline">Voir la carte ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMMANDER -->
+<section id="commander">
+  <div class="container">
+    <span class="section-label">À emporter</span>
+    <h2 class="section-title">Commandez en avance !</h2>
+    <p class="section-sub">C'est rapide et pratique</p>
+    <div class="commander-box">
+      <p>Appelez-nous <strong>30 min avant l'ouverture</strong> pour réserver votre créneau :</p>
+      <div class="horaires-rapides">
+        <div class="creneau">
+          <div class="label">🕙 Midi</div>
+          <div class="heure">10h45 – 11h15</div>
+        </div>
+        <div class="creneau">
+          <div class="label">🕕 Soir</div>
+          <div class="heure">18h00 – 18h30</div>
+        </div>
+      </div>
+      <a href="tel:0670427519" class="phone-big">📞 06 70 42 75 19</a>
+      <p class="tip">Pas de réponse ? Venez directement sur place, on s'occupe de vous à la caisse !</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARTE -->
+<section id="carte">
+  <div class="container">
+    <span class="section-label">Menu</span>
+    <h2 class="section-title">Notre carte</h2>
+    <p class="section-sub">Cliquez sur une image pour l'agrandir</p>
+    <div class="menu-tabs">
+      <button class="tab-btn active" onclick="showTab('tout',this)">🗺️ Toute la carte</button>
+      <button class="tab-btn" onclick="showTab('assiettes',this)">🍽️ Assiettes</button>
+      <button class="tab-btn" onclick="showTab('burgers',this)">🍔 Burgers</button>
+      <button class="tab-btn" onclick="showTab('hotdog',this)">🌭 Hot-dogs & Extras</button>
+      <button class="tab-btn" onclick="showTab('frites',this)">🍟 Frites maison</button>
+      <button class="tab-btn" onclick="showTab('salades',this)">🥗 Salades & Sandwichs</button>
+      <button class="tab-btn" onclick="showTab('enfants',this)">👶 Menu enfants</button>
+      <button class="tab-btn" onclick="showTab('desserts',this)">🍦 Desserts & Glaces</button>
+      <button class="tab-btn" onclick="showTab('boissons',this)">🥤 Boissons</button>
+    </div>
+    <div>
+      <div class="menu-panel active" id="panel-tout"><img src="images/carte-complete.webp" alt="Toute la carte" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-assiettes"><img src="images/menu-assiettes.png" alt="Assiettes" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-burgers"><img src="images/menu-burgers.png" alt="Burgers" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-hotdog"><img src="images/menu-hotdog.png" alt="Hot-dogs et extras" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-frites"><img src="images/menu-frites.png" alt="Frites maison" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-salades"><img src="images/menu-salades.png" alt="Salades et sandwichs" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-enfants"><img src="images/menu-enfants.png" alt="Menu enfants" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-desserts"><img src="images/menu-desserts.png" alt="Desserts et glaces" onclick="openLightbox(this)"></div>
+      <div class="menu-panel" id="panel-boissons"><img src="images/menu-boissons.png" alt="Boissons" onclick="openLightbox(this)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HORAIRES -->
+<section id="horaires">
+  <div class="container">
+    <span class="section-label">Quand venir ?</span>
+    <h2 class="section-title">Horaires d'ouverture</h2>
+    <p class="section-sub">Ouvert tous les jours sauf le lundi</p>
+    <div class="horaires-list">
+      <div class="horaire-row" data-day="2"><span class="horaire-jour">Mardi</span><span class="horaire-heure">11h15 – 14h00 · 18h30 – 21h30</span></div>
+      <div class="horaire-row" data-day="3"><span class="horaire-jour">Mercredi</span><span class="horaire-heure">11h15 – 14h00 · 18h30 – 21h30</span></div>
+      <div class="horaire-row" data-day="4"><span class="horaire-jour">Jeudi</span><span class="horaire-heure">11h15 – 14h00 · 18h30 – 21h30</span></div>
+      <div class="horaire-row" data-day="5"><span class="horaire-jour">Vendredi</span><span class="horaire-heure">11h15 – 14h00 · 18h30 – 22h00</span></div>
+      <div class="horaire-row" data-day="6"><span class="horaire-jour">Samedi</span><span class="horaire-heure">11h15 – 14h00 · 18h30 – 22h00</span></div>
+      <div class="horaire-row" data-day="0"><span class="horaire-jour">Dimanche</span><span class="horaire-heure">11h15 – 14h00 · 18h30 – 21h30</span></div>
+      <div class="horaire-row ferme" data-day="1"><span class="horaire-jour">Lundi</span><span class="horaire-heure">Fermé <small>(sauf jours fériés)</small></span></div>
+    </div>
+    <div class="note-horaires">
+      ⚠️ Les horaires peuvent changer les jours fériés — retrouvez les mises à jour sur notre <a href="https://www.facebook.com/LaFriterieGrill" target="_blank" rel="noopener">page Facebook</a>.
+    </div>
+  </div>
+</section>
+
+<!-- ALLERGÈNES -->
+<section id="allergenes">
+  <div class="container">
+    <span class="section-label">Santé & Sécurité</span>
+    <h2 class="section-title">Allergènes</h2>
+    <button onclick="toggleAllergenSection(this)" style="
+      background: var(--dark); color: var(--jaune); border: none;
+      padding: 0.75rem 1.8rem; border-radius: 50px; font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem; font-weight: 900; cursor: pointer; margin-bottom: 1.8rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: opacity 0.2s;
+    ">⚠️ Afficher les allergènes <span id="allergen-arrow">↓</span></button>
+
+    <div id="allergen-content" style="display:none">
+    <div class="allergen-tabs">
+      <button class="allergen-btn active" onclick="showAllergen('gluten',this)">🌾 Gluten <span class="abadge">16</span></button>
+      <button class="allergen-btn" onclick="showAllergen('oeuf',this)">🥚 Œuf <span class="abadge">12</span></button>
+      <button class="allergen-btn" onclick="showAllergen('lait',this)">🥛 Lait <span class="abadge">12</span></button>
+      <button class="allergen-btn" onclick="showAllergen('moutarde',this)">🌻 Moutarde <span class="abadge">9</span></button>
+      <button class="allergen-btn" onclick="showAllergen('soja',this)">🫘 Soja <span class="abadge">5</span></button>
+      <button class="allergen-btn" onclick="showAllergen('fruits-coque',this)">🌰 Fruits à coque <span class="abadge">3</span></button>
+      <button class="allergen-btn" onclick="showAllergen('sesame',this)">🌱 Sésame <span class="abadge">2</span></button>
+      <button class="allergen-btn" onclick="showAllergen('sulfites',this)">🍷 Sulfites <span class="abadge">2</span></button>
+      <button class="allergen-btn" onclick="showAllergen('poisson',this)">🐟 Poisson <span class="abadge">1</span></button>
+      <button class="allergen-btn" onclick="showAllergen('autre',this)">ℹ️ Autre <span class="abadge">4</span></button>
+      <button class="allergen-btn" onclick="showAllergen('aucun',this)">✅ Sans allergène <span class="abadge zero">0</span></button>
+    </div>
+
+    <!-- GLUTEN -->
+    <div class="allergen-panel active" id="ap-gluten">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🌾 Gluten</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Burger D357</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger US</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Amér. Steak</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Amér. Merguez</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Hot Dog NY</span><span class="dish-detail">Oignons frits & pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Hot Dog NY Fromage</span><span class="dish-detail">Oignons frits & pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger enfant</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger junior raclette</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger junior cheddar</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Corn Dog</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Filet de poulet Crousty</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Tous les sandwichs froids</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Salade César</span><span class="dish-detail">Croûtons</span></li>
+          <li class="allergen-dish"><span class="dish-name">Tous les desserts</span><span class="dish-detail">Sauf glaces et flan</span></li>
+          <li class="allergen-dish"><span class="dish-name">Steak végétarien</span><span class="dish-detail">Blé / soja</span></li>
+        </ul>
+        <div class="allergen-sauces">
+          <div class="allergen-sauces-title">Ingrédients & sauces</div>
+          <p>Sauce Andalouse · Croûtons · Oignons frits · Pain</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ŒUF -->
+    <div class="allergen-panel" id="ap-oeuf">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🥚 Œuf</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Burger D357</span><span class="dish-detail">Sauce cocktail</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger Junior Raclette</span><span class="dish-detail">Sauce cocktail</span></li>
+          <li class="allergen-dish"><span class="dish-name">Corn Dog</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Amér. Steak</span><span class="dish-detail">Mayonnaise</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Amér. Merguez</span><span class="dish-detail">Mayonnaise</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. crudité mayo</span><span class="dish-detail">Mayonnaise</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Poulet crudité mayo</span><span class="dish-detail">Mayonnaise</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Pâté de campagne</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Salade César</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Salade 3 fromages</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Œufs au plat</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Tous les desserts</span><span class="dish-detail">Sauf glaces</span></li>
+        </ul>
+        <div class="allergen-sauces">
+          <div class="allergen-sauces-title">Sauces</div>
+          <p>Sauce César · Sauce Mayonnaise · Sauce Biggy · Sauce Cocktail · Sauce Andalouse</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAIT -->
+    <div class="allergen-panel" id="ap-lait">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🥛 Lait</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Burger D357</span><span class="dish-detail">Raclette</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger US</span><span class="dish-detail">Biggy & cheddar</span></li>
+          <li class="allergen-dish"><span class="dish-name">Hot Dog NY Fromage</span><span class="dish-detail">Cheddar</span></li>
+          <li class="allergen-dish"><span class="dish-name">Corn Dog</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Frites au cheddar</span><span class="dish-detail">Cheddar</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger junior cheddar</span><span class="dish-detail">Cheddar</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger junior raclette</span><span class="dish-detail">Sauce Biggy</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Jambon beurre</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sand. Emmental beurre</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Salade César</span><span class="dish-detail">Parmesan, sauce César</span></li>
+          <li class="allergen-dish"><span class="dish-name">Salade 3 fromages</span><span class="dish-detail">Parmesan, mozzarella, emmental</span></li>
+          <li class="allergen-dish"><span class="dish-name">Tous les desserts</span><span class="dish-detail">Sauf sorbet fraise sans brisure</span></li>
+        </ul>
+        <div class="allergen-sauces">
+          <div class="allergen-sauces-title">Ingrédients & sauces</div>
+          <p>Cheddar · Sauce César · Croûtons · Sauce béarnaise · Sauce cheddar</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOUTARDE -->
+    <div class="allergen-panel" id="ap-moutarde">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🌻 Moutarde</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Andouillette au Vouvray</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Hot Dogs</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Merguez</span><span class="dish-detail">—</span></li>
+        </ul>
+        <div class="allergen-sauces">
+          <div class="allergen-sauces-title">Sauces</div>
+          <p>Sauce Biggy · Sauce Barbecue · Sauce Andalouse · Sauce Mayonnaise · Sauce moutarde · Sauce César</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOJA -->
+    <div class="allergen-panel" id="ap-soja">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🫘 Soja</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Donut cacao</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Brownie aux noix de pécan</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Tartelette saveur crème brûlée</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Steak végétarien</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Toutes les brisures glaces</span><span class="dish-detail">—</span></li>
+        </ul>
+        <div class="allergen-sauces">
+          <div class="allergen-sauces-title">Sauces</div>
+          <p>Sauce andalouse</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRUITS À COQUE -->
+    <div class="allergen-panel" id="ap-fruits-coque">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🌰 Fruits à coque</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Toutes les tartelettes</span><span class="dish-detail">—</span></li>
+          <li class="allergen-dish"><span class="dish-name">Brownie aux noix de pécan</span><span class="dish-detail">Noix de pécan</span></li>
+          <li class="allergen-dish"><span class="dish-name">Brisures Daim</span><span class="dish-detail">—</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SÉSAME -->
+    <div class="allergen-panel" id="ap-sesame">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🌱 Sésame</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Burger enfant</span><span class="dish-detail">Pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burgers junior</span><span class="dish-detail">Pain</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SULFITES -->
+    <div class="allergen-panel" id="ap-sulfites">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🍷 Sulfites</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Andouillette au Vouvray</span><span class="dish-detail">—</span></li>
+        </ul>
+        <div class="allergen-sauces">
+          <div class="allergen-sauces-title">Ingrédients</div>
+          <p>Mayonnaise · Moutarde</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- POISSON -->
+    <div class="allergen-panel" id="ap-poisson">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">🐟 Poisson</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Fish & Frites</span><span class="dish-detail">—</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AUTRE -->
+    <div class="allergen-panel" id="ap-autre">
+      <div class="allergen-panel-inner">
+        <div class="allergen-panel-title">ℹ️ Autre (Sarrasin, Orge…)</div>
+        <ul class="allergen-dishes">
+          <li class="allergen-dish"><span class="dish-name">Burger D357</span><span class="dish-detail">Sarrasin / pavot dans le pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Burger US</span><span class="dish-detail">Sarrasin / pavot dans le pain</span></li>
+          <li class="allergen-dish"><span class="dish-name">Sauce César</span><span class="dish-detail">Orge</span></li>
+          <li class="allergen-dish"><span class="dish-name">Croûtons</span><span class="dish-detail">Orge</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AUCUN -->
+    <div class="allergen-panel" id="ap-aucun">
+      <div class="allergen-panel-inner">
+        <div class="allergen-none">✅ Aucun plat concerné par les allergènes suivants : Arachides · Lupin · Céleri · Mollusques · Crustacés</div>
+      </div>
+    </div>
+
+    <div class="allergen-note">
+      ⚠️ Informations données à titre indicatif. En cas d'allergie sévère, contactez-nous au <a href="tel:0670427519" style="color:var(--rouge)">06 70 42 75 19</a>.
+    </div>
+    </div><!-- fin allergen-content -->
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-strip">
+    <div class="contact-strip-left">
+      <h2>On est là pour vous !</h2>
+      <p>7 route d'Épuisay – D 357 · 41170 Sargé-sur-Braye</p>
+    </div>
+    <div class="contact-strip-items">
+      <a href="tel:0670427519" class="contact-pill">📞 06 70 42 75 19</a>
+      <a href="mailto:lafriterie@orange.fr" class="contact-pill">✉️ lafriterie@orange.fr</a>
+      <a href="https://www.facebook.com/LaFriterieGrill" target="_blank" rel="noopener" class="contact-pill light">📘 Facebook</a>
+      <a href="https://maps.google.com/?q=7+route+d'Epuisay+41170+Sarge-sur-Braye" target="_blank" rel="noopener" class="contact-pill light">📍 Itinéraire</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 La Friterie Grill · Sargé-sur-Braye · Réalisé par <strong>Hoslty</strong></p>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function openLightbox(img) {
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  function toggleAllergenSection(btn) {
+    const content = document.getElementById('allergen-content');
+    const open = content.style.display === 'none';
+    content.style.display = open ? 'block' : 'none';
+    document.getElementById('allergen-arrow').textContent = open ? '↑' : '↓';
+    btn.style.opacity = open ? '1' : '0.7';
+  }
+
+  function showAllergen(id, btn) {
+    document.querySelectorAll('.allergen-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.allergen-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('ap-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Highlight today
+  const today = new Date().getDay();
+  document.querySelectorAll('.horaire-row').forEach(row => {
+    if (parseInt(row.dataset.day) === today) {
+      row.classList.add('today');
+      row.querySelector('.horaire-jour').innerHTML += '<span class="today-tag">Aujourd\'hui</span>';
+    }
+  });
+</script>
+
+</body>
+</html>
